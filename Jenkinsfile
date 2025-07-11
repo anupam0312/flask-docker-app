@@ -23,17 +23,13 @@ pipeline {
         }
 
         stage('Stop Previous Container') {
-    steps {
-        script {
-            sh '''
-            docker stop flask_app_container || true
-            docker rm flask_app_container || true
-            docker ps -q --filter "publish=5000" | xargs -r docker stop || true
-            '''
-        }
-    }
-}
-
+            steps {
+                script {
+                    sh '''
+                    docker stop flask_app_container || true
+                    docker rm flask_app_container || true
+                    docker ps -q --filter "publish=5000" | xargs -r docker stop || true
+                    '''
                 }
             }
         }
