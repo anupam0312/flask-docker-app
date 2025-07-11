@@ -23,13 +23,17 @@ pipeline {
         }
 
         stage('Stop Previous Container') {
-            steps {
-                script {
-                    // Stop and remove existing container if it exists
-                    sh """
-                    docker stop ${CONTAINER_NAME} || true
-                    docker rm ${CONTAINER_NAME} || true
-                    """
+    steps {
+        script {
+            sh '''
+            docker stop flask_app_container || true
+            docker rm flask_app_container || true
+            docker ps -q --filter "publish=5000" | xargs -r docker stop || true
+            '''
+        }
+    }
+}
+
                 }
             }
         }
